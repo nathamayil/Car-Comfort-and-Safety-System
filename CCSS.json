@@ -1,0 +1,1113 @@
+[
+    {
+        "id": "ddd5c41980abe1c8",
+        "type": "tab",
+        "label": "GPS Module Final",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "428c0925bf0fc98c",
+        "type": "webhookrelay",
+        "z": "ddd5c41980abe1c8",
+        "buckets": "gps",
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "ec9ed1f02bddca1b"
+            ]
+        ]
+    },
+    {
+        "id": "3394f59fdbd8c4a0",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "func": "var newobject = { lat:msg.payload.lat, lon:msg.payload.lon};\nmsg.payload = newobject;\nreturn msg;    \n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "abe71220cd385db0",
+                "4e38335bd28efe8f",
+                "49ca2d30f3b39625"
+            ]
+        ]
+    },
+    {
+        "id": "abe71220cd385db0",
+        "type": "worldmap",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "lat": "12.996533",
+        "lon": "80.2634625",
+        "zoom": "",
+        "layer": "OSM",
+        "cluster": "",
+        "maxage": "800",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "deg",
+        "showgrid": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 880,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "4e38335bd28efe8f",
+        "type": "worldmap-tracks",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "depth": 20,
+        "layer": "combined",
+        "smooth": false,
+        "x": 670,
+        "y": 60,
+        "wires": [
+            [
+                "abe71220cd385db0"
+            ]
+        ]
+    },
+    {
+        "id": "ec9ed1f02bddca1b",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "func": "return {\n    payload: msg.payload.body\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 280,
+        "wires": [
+            [
+                "6ee950cdfcb87921",
+                "06fc9991fd6b777f"
+            ]
+        ]
+    },
+    {
+        "id": "06fc9991fd6b777f",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 210,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "6ee950cdfcb87921",
+        "type": "json",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "3394f59fdbd8c4a0",
+                "898603a2e995c9ab",
+                "572db210e9878ed4"
+            ]
+        ]
+    },
+    {
+        "id": "49ca2d30f3b39625",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "252a86add0b0c844",
+        "type": "sqlite",
+        "z": "ddd5c41980abe1c8",
+        "mydb": "2658e795390c58e9",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "GPS",
+        "x": 710,
+        "y": 360,
+        "wires": [
+            [
+                "1a323db0a1fb7973"
+            ]
+        ]
+    },
+    {
+        "id": "1a323db0a1fb7973",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "11d55f401180c47a",
+        "type": "inject",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT * FROM GPSDATA7",
+        "payloadType": "date",
+        "x": 540,
+        "y": 440,
+        "wires": [
+            [
+                "252a86add0b0c844"
+            ]
+        ]
+    },
+    {
+        "id": "898603a2e995c9ab",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "func": "var acc=msg.payload.acc;\nvar vel=msg.payload.vel;\nvar alt=msg.payload.alt;\nvar bat=msg.payload.batt;\nvar lat=msg.payload.lat;\nvar lon=msg.payload.lon;\nvar ts=msg.payload.tst;\nmsg.payload=\"{'Acceleration':\"+acc+\",'Velocity':\"+vel+\",'Battery':\"+bat+\",'Latitude':\"+lat+\",'Longitude':\"+lon+\",'Altitude':\"+alt+\"}\";\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 200,
+        "wires": [
+            [
+                "ab311766a24d82f8"
+            ]
+        ]
+    },
+    {
+        "id": "0ec7569dc456cca8",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "572db210e9878ed4",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "func": "var newMsg ={ \"topic\" : \"INSERT INTO GPSDATA4 (VELOCITY, ACCELERATION, LATITUDE, LONGITUDE, ALT, BATTERY) VALUES(\"+msg.payload.vel+\",\"+msg.payload.acc+\",\"+msg.payload.lat+\",\"+msg.payload.lon+\",\"+msg.payload.alt+\",\"+msg.payload.batt+\")\"}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [
+                "252a86add0b0c844"
+            ]
+        ]
+    },
+    {
+        "id": "ab311766a24d82f8",
+        "type": "http request",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://demo.thingsboard.io/api/v1/Ecsf2hnqgvaHbY2FoB0t/telemetry",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 850,
+        "y": 480,
+        "wires": [
+            [
+                "0ec7569dc456cca8"
+            ]
+        ]
+    },
+    {
+        "id": "55cbbf1a976bde19",
+        "type": "sendsms",
+        "z": "ddd5c41980abe1c8",
+        "creds": "748a69e0eb2efbb7",
+        "to": "919176665391",
+        "fr": "Nathamayil",
+        "text": "Someone's trying to open the car!",
+        "unicode": false,
+        "x": 410,
+        "y": 500,
+        "wires": [
+            [
+                "ec41b4081d0e131a"
+            ]
+        ]
+    },
+    {
+        "id": "b1a94341ccc11471",
+        "type": "inject",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 500,
+        "wires": [
+            [
+                "55cbbf1a976bde19",
+                "67798f06ea131af8"
+            ]
+        ]
+    },
+    {
+        "id": "67798f06ea131af8",
+        "type": "e-mail",
+        "z": "ddd5c41980abe1c8",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "nathamayil@gmail.com",
+        "dname": "",
+        "x": 430,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "ec41b4081d0e131a",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "7f2d49d1d97e03e8",
+        "type": "openweathermap in",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "wtype": "current",
+        "lon": "",
+        "lat": "",
+        "city": "Chennai",
+        "country": "India",
+        "language": "en",
+        "x": 140,
+        "y": 680,
+        "wires": [
+            [
+                "95e0686aa0799cb7",
+                "fa5d105874058d4d",
+                "0e58ac6a3d01d802",
+                "cf75f729de5d42b4",
+                "a08774abbaff1e2b",
+                "0a1109d94031b1ec"
+            ]
+        ]
+    },
+    {
+        "id": "95e0686aa0799cb7",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "Windshield Wipers",
+        "func": "if(msg.payload.weather==\"Mist\")\n{\n    msge=\"ON\"\n}\nif(msg.payload.weather==\"Drizzle\")\n{\n    msge=\"ON\"\n}\nif(msg.payload.weather==\"Light Rain\")\n{\n    msge=\"ON\"\n}\nif(msg.payload.weather==\"Rain\")\n{\n    msge=\"ON\"\n}\nelse\n{\n    msge=\"OFF\"\n}\nmsg.payload=\"{'Windshield Wipers':\"+msge+\"}\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 640,
+        "wires": [
+            [
+                "5ee0596d37611770",
+                "39af90fcf3b4b441",
+                "ab311766a24d82f8"
+            ]
+        ]
+    },
+    {
+        "id": "5ee0596d37611770",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "39af90fcf3b4b441",
+        "type": "ui_text",
+        "z": "ddd5c41980abe1c8",
+        "group": "f38657b011f48e23",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Windshield Wipers",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 790,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "fa5d105874058d4d",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "Indoor Temperature",
+        "func": "if(msg.payload.tempc<20)\n{\n    msge=26\n}\nif(msg.payload.tempc>=21&&msg.payload.tempc<25)\n{\n    msge=24\n}\nif(msg.payload.tempc>=25&&msg.payload.tempc<28)\n{\n    msge=23\n}\nif(msg.payload.tempc>=28&&msg.payload.tempc<32)\n{\n    msge=22\n}\nif(msg.payload.tempc>=32&&msg.payload.tempc<37)\n{\n    msge=20\n}\nif(msg.payload.tempc>=37&&msg.payload.tempc<40)\n{\n    msge=19\n}\nelse\n{\n    msge=\"18\"\n}\nmsg.payload=\"{'Indoor Temperature':\"+msge+\"}\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 700,
+        "wires": [
+            [
+                "ab311766a24d82f8"
+            ]
+        ]
+    },
+    {
+        "id": "0e58ac6a3d01d802",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "Auto Headlights",
+        "func": "if(msg.payload.clouds<60)\n{\n    msge=\"OFF\"\n}\nif(msg.payload.clouds>=60&&msg.payload.clouds<70)\n{\n    msge=\"Low Beam\"\n}\nif(msg.payload.clouds>=70&&msg.payload.clouds<95)\n{\n    msge=\"High Beam\"\n}\nmsg.payload=\"{'Headlights':\"+msge+\"}\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 800,
+        "wires": [
+            [
+                "9390a30419b9c03a",
+                "34ca584b68c74550"
+            ]
+        ]
+    },
+    {
+        "id": "9390a30419b9c03a",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "c537e2fa58985014",
+        "type": "ui_text",
+        "z": "ddd5c41980abe1c8",
+        "group": "e87f08f38cdb7638",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Car Headlights",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 780,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "b928448c233d62c9",
+        "type": "inject",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 820,
+        "wires": [
+            [
+                "bafd31ecaa5a5a79"
+            ]
+        ]
+    },
+    {
+        "id": "bafd31ecaa5a5a79",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "func": "var time = msg.payload;\nif (time < 18 && time>7) {\n    msge=\"OFF\"\n} else {\n    msge=\"ON\"\n}\nmsg.payload=\"{'Time based headlights':\"+msge+\"}\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 860,
+        "wires": [
+            [
+                "c537e2fa58985014",
+                "985f0e13f8ccee3a",
+                "ab311766a24d82f8"
+            ]
+        ]
+    },
+    {
+        "id": "985f0e13f8ccee3a",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "34ca584b68c74550",
+        "type": "ui_text",
+        "z": "ddd5c41980abe1c8",
+        "group": "e87f08f38cdb7638",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Weather Based Headlight Automation",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 850,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "a08774abbaff1e2b",
+        "type": "ui_gauge",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "group": "b55699d546b70a2c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Outdoor Temperature",
+        "label": "Celscius",
+        "format": "{{msg.payload.tempc}}",
+        "min": "15",
+        "max": "40",
+        "colors": [
+            "#002db3",
+            "#0082e6",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 800,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "cf75f729de5d42b4",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "7e59ac7a8fb0882d",
+        "type": "ui_button",
+        "z": "ddd5c41980abe1c8",
+        "name": "IconRefresh",
+        "group": "1f01ef29a83c3e8f",
+        "order": 1,
+        "width": 2,
+        "height": 2,
+        "passthru": false,
+        "label": "",
+        "tooltip": "Refresh",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-refresh fa-4x",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "topicType": "str",
+        "x": 830,
+        "y": 1360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5ce193bc26f18a3d",
+        "type": "ui_text",
+        "z": "ddd5c41980abe1c8",
+        "group": "1f01ef29a83c3e8f",
+        "order": 5,
+        "width": 5,
+        "height": 1,
+        "name": "Description",
+        "label": "",
+        "format": "{{msg.payload.current.weather[0].description}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 830,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "163e33e15995f63e",
+        "type": "ui_text",
+        "z": "ddd5c41980abe1c8",
+        "group": "1f01ef29a83c3e8f",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "name": "Wind",
+        "label": "",
+        "format": "{{msg.payload.current.wind_speed}}&nbsp;&nbsp;<i class=\"wi wi-darksky-wind\"></i>&nbsp;&nbsp;{{msg.payload.current.wind_cardinal}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 810,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "76111797413faa12",
+        "type": "ui_text",
+        "z": "ddd5c41980abe1c8",
+        "group": "1f01ef29a83c3e8f",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "name": "SunriseTime",
+        "label": "",
+        "format": "<i class=\"wi wi-owm-01d\"></i>&nbsp;<i class=\"fa fa-arrow-up\"></i>&nbsp;&nbsp;{{msg.payload.current.sunrise}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 830,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "e3d0dad306ead3c1",
+        "type": "ui_text",
+        "z": "ddd5c41980abe1c8",
+        "group": "1f01ef29a83c3e8f",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "name": "SunsetTime",
+        "label": "",
+        "format": "<i class=\"wi wi-wu-sunny\"></i>&nbsp;<i class=\"fa fa-arrow-down\"></i>&nbsp;&nbsp;{{msg.payload.current.sunset}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 830,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "c00c0e3a6216d402",
+        "type": "ui_text",
+        "z": "ddd5c41980abe1c8",
+        "group": "1f01ef29a83c3e8f",
+        "order": 2,
+        "width": 2,
+        "height": 1,
+        "name": "Temperature",
+        "label": "",
+        "format": "<p style=\"font-size: 200%\">{{msg.payload.current.temp}}</p>",
+        "layout": "row-spread",
+        "className": "",
+        "x": 830,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "695f5c2eb76a4af2",
+        "type": "http request",
+        "z": "ddd5c41980abe1c8",
+        "name": "Get OWM data",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "https://api.openweathermap.org/data/2.5/onecall?lat=13.067439&lon=\t80.237617&exclude={part}&appid=ba11e6fb919e827097d89c72e2ca451e",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 500,
+        "y": 1180,
+        "wires": [
+            [
+                "f8cecb4c9b2c5289"
+            ]
+        ]
+    },
+    {
+        "id": "c8f6f64874c39903",
+        "type": "inject",
+        "z": "ddd5c41980abe1c8",
+        "name": "Trigger",
+        "props": [
+            {
+                "p": "payload",
+                "v": "true",
+                "vt": "bool"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "string"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 120,
+        "y": 1200,
+        "wires": [
+            [
+                "8cb8d8fdc4025697"
+            ]
+        ]
+    },
+    {
+        "id": "f8cecb4c9b2c5289",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "Format current data",
+        "func": "var icon = {};\n\nvar units = flow.get('units');\nif (units === undefined) {units = 'imperial';}\n\nfunction timeConvert(UNIX_timestamp){\n  var dateObject = new Date(UNIX_timestamp * 1000);\n  if (flow.get('hour12')) {  // 12 hour time format\n    return dateObject.toLocaleString('en', { timezone: msg.payload.timezone, hour12: true, hour: 'numeric', minute: '2-digit'}).toLowerCase();\n  } else {  // 24 hour time format\n    return dateObject.toLocaleString('en', { timezone: msg.payload.timezone, hour12: false, hour: 'numeric', minute: '2-digit'});\n  }      \n}\n\nvar degreesToCardinal = function(deg){\n  if (deg>11.25 && deg<=33.75){return \"NNE\";}\n  else if (deg>33.75 && deg<56.25){return \"NE\";}\n  else if (deg>56.25 && deg<78.75){return \"ENE\";}\n  else if (deg>78.75 && deg<101.25){return \"E\";}\n  else if (deg>101.25 && deg<123.75){return \"ESE\";}\n  else if (deg>123.75 && deg<146.25){return \"SE\";}\n  else if (deg>146.25 && deg<168.75){return \"SSE\";}\n  else if (deg>168.75 && deg<191.25){return \"S\";}\n  else if (deg>191.25 && deg<213.75){return \"SSW\";}\n  else if (deg>213.75 && deg<236.25){return \"SW\";}\n  else if (deg>236.25 && deg<258.75){return \"WSW\";}\n  else if (deg>258.75 && deg<281.25){return \"W\";}\n  else if (deg>281.25 && deg<303.75){return \"WNW\";}\n  else if (deg>303.75 && deg<326.25){return \"NW\";}\n  else if (deg>326.25 && deg<348.75){return \"NNW\";}\n  else {return \"N\";}\n}\n\nif (units == \"imperial\")\n{\n  msg.payload.current.temp = msg.payload.current.temp.toFixed() + ' °F';\n  msg.payload.current.wind_speed = msg.payload.current.wind_speed.toFixed() + ' mph';\n}\nelse  // metric units\n{\n  msg.payload.current.temp = msg.payload.current.temp.toFixed(1) + ' °C';\n  msg.payload.current.wind_speed = msg.payload.current.wind_speed.toFixed(1) + ' m/s';\n}\n\nmsg.payload.current.wind_cardinal = degreesToCardinal(msg.payload.current.wind_deg);\n\nmsg.payload.current.sunrise = timeConvert(msg.payload.current.sunrise);\nmsg.payload.current.sunset = timeConvert(msg.payload.current.sunset);\n\nvar iconString = 'wi-owm-' + msg.payload.current.weather[0].icon + ' wi-4x';\nicon = {\n    ui_control: {\n        icon: iconString\n    }\n}; \n\nreturn [msg, icon];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 590,
+        "y": 1280,
+        "wires": [
+            [
+                "c00c0e3a6216d402",
+                "163e33e15995f63e",
+                "5ce193bc26f18a3d",
+                "76111797413faa12",
+                "e3d0dad306ead3c1"
+            ],
+            [
+                "7e59ac7a8fb0882d"
+            ]
+        ]
+    },
+    {
+        "id": "8cb8d8fdc4025697",
+        "type": "change",
+        "z": "ddd5c41980abe1c8",
+        "name": "Settings",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.lat",
+                "pt": "msg",
+                "to": "40.30",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.lon",
+                "pt": "msg",
+                "to": "-111.69",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.appid",
+                "pt": "msg",
+                "to": "<appID>",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.units",
+                "pt": "msg",
+                "to": "imperial",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.lang",
+                "pt": "msg",
+                "to": "en",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "hour12",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "units",
+                "pt": "flow",
+                "to": "payload.units",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "lang",
+                "pt": "flow",
+                "to": "payload.lang",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.exclude",
+                "pt": "msg",
+                "to": "minutely",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 1200,
+        "wires": [
+            [
+                "695f5c2eb76a4af2"
+            ]
+        ]
+    },
+    {
+        "id": "77d7a2267053ed22",
+        "type": "ui_ui_control",
+        "z": "ddd5c41980abe1c8",
+        "name": "Update tab",
+        "events": "all",
+        "x": 110,
+        "y": 1280,
+        "wires": [
+            [
+                "a9a590ef94bb1699"
+            ]
+        ]
+    },
+    {
+        "id": "a9a590ef94bb1699",
+        "type": "switch",
+        "z": "ddd5c41980abe1c8",
+        "name": "tab focus",
+        "property": "tab",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 340,
+        "y": 1280,
+        "wires": [
+            [
+                "8cb8d8fdc4025697"
+            ]
+        ]
+    },
+    {
+        "id": "98025b94edccc895",
+        "type": "comment",
+        "z": "ddd5c41980abe1c8",
+        "name": "Burglar Alarm",
+        "info": "",
+        "x": 150,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "959a417f57a69662",
+        "type": "comment",
+        "z": "ddd5c41980abe1c8",
+        "name": "Present Weather Conditions",
+        "info": "",
+        "x": 160,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "0a1109d94031b1ec",
+        "type": "function",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "func": "if(msg.payload.tempc<20)\n{\n    msge=26\n}\nif(msg.payload.tempc>=21&&msg.payload.tempc<25)\n{\n    msge=24\n}\nif(msg.payload.tempc>=25&&msg.payload.tempc<28)\n{\n    msge=23\n}\nif(msg.payload.tempc>=28&&msg.payload.tempc<32)\n{\n    msge=22\n}\nif(msg.payload.tempc>=32&&msg.payload.tempc<37)\n{\n    msge=20\n}\nif(msg.payload.tempc>=37&&msg.payload.tempc<40)\n{\n    msge=19\n}\nelse\n{\n    msge=\"18\"\n}\nmsg.payload=msge;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 940,
+        "wires": [
+            [
+                "a49a5ad9ed686721",
+                "a172d0ccf2ccf73a"
+            ]
+        ]
+    },
+    {
+        "id": "a49a5ad9ed686721",
+        "type": "ui_gauge",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "group": "b55699d546b70a2c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Indoor Temperature",
+        "label": "degree celscius",
+        "format": "{{msg.payload}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 790,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "a172d0ccf2ccf73a",
+        "type": "debug",
+        "z": "ddd5c41980abe1c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "2658e795390c58e9",
+        "type": "sqlitedb",
+        "db": "gps",
+        "mode": "RWC"
+    },
+    {
+        "id": "748a69e0eb2efbb7",
+        "type": "nexmobasic"
+    },
+    {
+        "id": "f38657b011f48e23",
+        "type": "ui_group",
+        "name": "Windshield Wiper Status",
+        "tab": "abfa1b5ee3d0b0b9",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e87f08f38cdb7638",
+        "type": "ui_group",
+        "name": "Car Headlights",
+        "tab": "abfa1b5ee3d0b0b9",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b55699d546b70a2c",
+        "type": "ui_group",
+        "name": "Indoor Temperature",
+        "tab": "abfa1b5ee3d0b0b9",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1f01ef29a83c3e8f",
+        "type": "ui_group",
+        "name": "Present Weather Conditions",
+        "tab": "abfa1b5ee3d0b0b9",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "abfa1b5ee3d0b0b9",
+        "type": "ui_tab",
+        "name": "CCSS",
+        "icon": "dashboard",
+        "order": 9,
+        "disabled": false,
+        "hidden": false
+    }
+]
