@@ -11,4 +11,6 @@ Install OwnTracks and via a webhook relay using HTTP or MQTT, you can transmit v
 
 We've used the free API from OpenWeather for temperature and wind values.
 
+The repo also includes a prototype for the app made using JustInMind.
+
 Hope this helps!
